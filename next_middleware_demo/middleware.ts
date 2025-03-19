@@ -1,9 +1,14 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-
-let requestCount = 0;
+ 
 export function middleware(request: NextRequest) {
-  requestCount++;
-  console.log("number of requests is " + requestCount);
-  return  NextResponse.next()
+  console.log(request.nextUrl.pathname)
+  if (request.nextUrl.pathname.startsWith('/admin')) {
+    return NextResponse.redirect(new URL('/signin', request.url))
+  }
+  //yup we are using if statements baby
+ 
+  if (request.nextUrl.pathname.startsWith('/dashboard')) {
+    return NextResponse.next()
+  }
 }
